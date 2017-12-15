@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="integration-test-suite" verbose="1">
+	<test name="foodservice">
+		<classes>
+			<class name="hu.foodservice.persistence.orderservice.OrderServiceImplIntegrationTest" />
+			<class name="hu.foodservice.persistence.customerservice.CustomerServiceImplIntegrationTest" />
+			<class name="hu.foodservice.persistence.mealservice.MealServiceImplIntegrationTest" />
+			<class name="hu.foodservice.persistence.menuservice.MenuServiceImplIntegrationTest" />
+		</classes>
+	</test>
+</suite>

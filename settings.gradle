@@ -1,0 +1,5 @@
+include 'fs-ejbservice'
+include 'fs-weblayer'
+include 'fs-persistence'
+include 'fs-webservice'
+include 'fs-restclient'

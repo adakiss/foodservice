@@ -1,0 +1,8 @@
+apply plugin: 'war'
+
+war { archiveName webserviceArchiveName }
+
+dependencies {
+	providedCompile project(':fs-ejbservice')
+	providedCompile group: 'javax', name: 'javaee-api', version:'6.0'
+}

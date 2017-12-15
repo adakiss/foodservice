@@ -1,0 +1,55 @@
+apply plugin: 'ear'
+
+ext {
+	jeeVersion='6.0'
+	log4jVersion='1.2.17'
+	testngVersion='6.9.+'
+	mockitoVersion='2.11.0'
+	hibernateVersion='4.3.10.Final'
+	postgresqlVersion='9.4+'
+	jbossEEVersion='2.0.0.Final'
+	resteasyVersion = '2.3.7.Final'
+	commonsloggingVersion = '1.2'
+	
+	webserviceArchiveName = 'fs-foodservice.war'
+	
+	weblayerArchiveName = 'fs-weblayer.war'
+}
+
+subprojects {
+	apply plugin: 'java'
+	
+	repositories { 
+		mavenCentral()
+		maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
+	}
+	
+	dependencies {
+		compile group: 'log4j', name: 'log4j', version: log4jVersion
+		testCompile group: 'org.testng', name: 'testng', version: testngVersion
+		testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+	}
+	
+	test {
+		useTestNG()
+	}
+}
+
+configure(subprojects.findAll {it.name != 'fs-persistence' && it.name != 'fs-restclient'}) {
+	dependencies {
+		compile group: 'javax', name: 'javaee-api', version: jeeVersion
+	}
+}
+
+ear {
+	deploymentDescriptor {
+		webModule(webserviceArchiveName, 'foodservice')
+	}
+}
+
+dependencies {
+	deploy project('fs-persistence')
+	deploy project('fs-ejbservice')
+	deploy project(path: 'fs-weblayer', configuration: 'archives')
+	deploy project(path: 'fs-webservice', configuration: 'archives')
+}

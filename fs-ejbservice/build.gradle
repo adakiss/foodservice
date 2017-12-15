@@ -1,0 +1,5 @@
+jar { archiveName 'fs-ejbservice.jar' }
+
+dependencies {
+	compile project(':fs-persistence')
+}

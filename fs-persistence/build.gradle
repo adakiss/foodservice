@@ -1,0 +1,16 @@
+jar { archiveName 'fs-persistence.jar' }
+
+dependencies {
+	compileOnly group: 'javax', name: 'javaee-api', version: jeeVersion
+	testCompile group: 'org.postgresql', name: 'postgresql', version: postgresqlVersion
+	testCompile group: 'org.hibernate', name: 'hibernate-core', version: 'hibernateVersion'
+	testCompile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
+	testCompile group: 'org.jboss.spec', name: 'jboss-javaee-6.0', version: jbossEEVersion
+}
+
+test {
+	useTestNG {
+		suites 'src/test/resources/testng-integration.xml'
+		// suites 'src/test/resources/testng-unit.xml'
+	}
+}
