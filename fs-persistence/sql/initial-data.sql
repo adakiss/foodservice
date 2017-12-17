@@ -81,3 +81,26 @@ VALUES (3, 4);
 
 INSERT INTO menu_meal (menu_id, meal_id)
 VALUES (3, 6);
+
+--JAAS data
+INSERT INTO role (role_id, role_name)
+VALUES (0, 'admin');
+
+INSERT INTO role (role_id, role_name)
+VALUES (1, 'user');
+
+SELECT SETVAL('role_role_id_seq', COALESCE(MAX(role_id), 1)) FROM role;
+
+INSERT INTO appuser (appuser_id, appuser_name, appuser_password)
+VALUES (0, 'jsmith', '123456');
+INSERT INTO appuser (appuser_id, appuser_name, appuser_password)
+VALUES (1, 'emorin', '123456');
+
+SELECT SETVAL('appuser_appuser_id_seq', COALESCE(MAX(role_id), 1)) FROM role;
+
+INSERT INTO userrole (userrole_appuser_id, userrole_role_id)
+VALUES (0, 0);
+INSERT INTO userrole (userrole_appuser_id, userrole_role_id)
+VALUES (0, 1);
+INSERT INTO userrole (userrole_appuser_id, userrole_role_id)
+VALUES (1, 1);

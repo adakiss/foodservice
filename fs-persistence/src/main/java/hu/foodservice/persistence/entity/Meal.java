@@ -21,7 +21,7 @@ import javax.persistence.Table;
 	@NamedQuery(name="Meal.countByName", query="SELECT count(ml) FROM Meal ml WHERE ml.name=:name"),
 	@NamedQuery(name = "Meal.deleteByName", query = "DELETE FROM Meal ml WHERE ml.name=:name")
 })
-public class Meal implements Serializable {
+public class Meal implements Serializable, Comparable<Meal> {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -77,6 +77,16 @@ public class Meal implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+
+	@Override
+	public int compareTo(Meal arg0) {
+		if (arg0.getId() > this.id) {
+			return -1;
+		} else if (arg0.getId() < this.id) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	

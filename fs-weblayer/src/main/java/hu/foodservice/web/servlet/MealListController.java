@@ -1,7 +1,6 @@
-package hu.foodservice.web;
+package hu.foodservice.web.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,61 +15,56 @@ import org.apache.log4j.Logger;
 
 import hu.foodservice.ejb.mealfacade.MealFacade;
 import hu.foodservice.ejb.mealfacade.MealStub;
-import hu.foodservice.ejb.menufacade.MenuFacade;
 
-@WebServlet("/MenuCreator")
-public class MenuCreatorController extends HttpServlet {
+@WebServlet("/MealList")
+public class MealListController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static final Logger LOGGER = Logger.getLogger(MenuCreatorController.class);
-	
-	@EJB
-	private MenuFacade facade;
+
+	private static Logger LOGGER = Logger.getLogger(MealListController.class);
 	
 	@EJB
-	private MealFacade mealFacade;
+	private MealFacade facade;
 
 	@Override
 	protected void doGet(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
 		
-		LOGGER.info("Initializing menu creator");
+		LOGGER.info("Get all meals");
 		
 		try {
-			List<MealStub> meals = mealFacade.getAllMeals();
+			List<MealStub> meals = facade.getAllMeals();
 			arg0.setAttribute("meals", meals);
 		} catch (Exception e) {
 			LOGGER.error(e, e);
 			//throw e;
 		}
 		
-		RequestDispatcher view = arg0.getRequestDispatcher("menucreator.jsp");
+		RequestDispatcher view = arg0.getRequestDispatcher("meallist.jsp");
 		view.forward(arg0, arg1);
 	}
-
+	
 	@Override
 	protected void doPost(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
 		
-		if (arg0.getParameter("create") != null) {
-			
-			LOGGER.info("Creating new menu");
+		if (arg0.getParameter("add") != null) {
+			LOGGER.info("Adding new meal to the database");
 			
 			try {
-				List<String> meals = new ArrayList<String>();
-				String[] mealsSelected = arg0.getParameterValues("meals");
-				if (mealsSelected != null) {
-					for(int i = 0; i < mealsSelected.length; i++) {
-						if(mealsSelected[i] != null) {
-							meals.add(mealsSelected[i]);
-						}
-					}
-					
-					facade.addMenu(arg0.getParameter("menu_name"), meals, true, Integer.parseInt(arg0.getParameter("menu_price")));
-				}		
+				facade.addMeal(arg0.getParameter("meal_name"), arg0.getParameter("meal_description"), Boolean.parseBoolean(arg0.getParameter("meal_isAllergic")), Integer.parseInt(arg0.getParameter("meal_price")));
 			} catch (Exception e) {
 				LOGGER.error(e, e);
 			}
 			
+			RequestDispatcher view = arg0.getRequestDispatcher("EmployeeMainPanel.html");
+			view.forward(arg0, arg1);
+		} else if (arg0.getParameter("remove") != null) {
+			LOGGER.info("Delete meal from database");
+			
+			try {
+				facade.removeMeal(arg0.getParameter("meal_name"));
+			} catch (Exception e) {
+				LOGGER.error(e, e);
+			}
 			RequestDispatcher view = arg0.getRequestDispatcher("EmployeeMainPanel.html");
 			view.forward(arg0, arg1);
 		}

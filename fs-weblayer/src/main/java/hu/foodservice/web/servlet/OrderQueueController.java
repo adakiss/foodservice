@@ -1,6 +1,7 @@
-package hu.foodservice.web;
+package hu.foodservice.web.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -12,36 +13,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import hu.foodservice.ejb.menufacade.MenuFacade;
-import hu.foodservice.ejb.menufacade.MenuStub;
+import hu.foodservice.ejb.orderfacade.CustomerOrderStub;
+import hu.foodservice.ejb.orderfacade.OrderFacade;
 
-@WebServlet("/Menu")
-public class MenuController extends HttpServlet {
+@WebServlet("/OrderQueue")
+public class OrderQueueController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOGGER = Logger.getLogger(MenuController.class);
+	private static Logger LOGGER = Logger.getLogger(OrderQueueController.class);
 	
 	@EJB
-	private MenuFacade facade;
+	private OrderFacade facade;
 
 	@Override
 	protected void doGet(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
 		
-		String menuName = arg0.getParameter("name");
-		LOGGER.info("Get menu with name: " + menuName);
+		LOGGER.info("Get all orders");
 		
 		try {
-			MenuStub menu = facade.getMenu(menuName);
-			arg0.setAttribute("menu", menu);
+			List<CustomerOrderStub> custOrders = facade.getAllCustomerOrders();
+			arg0.setAttribute("custOrders", custOrders);
 		} catch (Exception e) {
 			LOGGER.error(e, e);
 			//throw e;
 		}
 		
-		RequestDispatcher view = arg0.getRequestDispatcher("menu.jsp");
+		RequestDispatcher view = arg0.getRequestDispatcher("orderqueue.jsp");
 		view.forward(arg0, arg1);
 	}
-	
 	
 }

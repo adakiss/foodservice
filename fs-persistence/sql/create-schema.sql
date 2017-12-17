@@ -86,3 +86,41 @@ CREATE TABLE customerorder (
 ALTER TABLE customerorder OWNER TO postgres;
 
 CREATE UNIQUE INDEX UI_CUSTOMERORDER_ORDERCODE ON customerorder USING btree (customerorder_ordercode);
+
+DROP TABLE appuser CASCADE;
+
+CREATE TABLE appuser (
+	appuser_id SERIAL NOT NULL,
+	appuser_name CHARACTER VARYING(100) NOT NULL,
+	appuser_password CHARACTER VARYING(100),
+	CONSTRAINT PK_APPUSER_ID PRIMARY KEY (appuser_id)
+);
+
+ALTER TABLE appuser OWNER TO postgres;
+
+CREATE UNIQUE INDEX UI_APPUSER_NAME ON appuser USING btree (appuser_name);
+
+DROP TABLE role CASCADE;
+
+CREATE TABLE role (
+	role_id SERIAL NOT NULL,
+	role_name CHARACTER VARYING(100),
+	CONSTRAINT PK_ROLE_ID PRIMARY KEY (role_id)
+);
+
+ALTER TABLE role OWNER TO postgres;
+
+DROP TABLE userrole CASCADE;
+
+CREATE TABLE userrole (
+	userrole_id SERIAL NOT NULL,
+	userrole_appuser_id INTEGER NOT NULL,
+	userrole_role_id INTEGER NOT NULL,
+	CONSTRAINT PK_USERROLE_ID PRIMARY KEY (userrole_id),
+	CONSTRAINT FK_USERROLE_USER FOREIGN KEY (userrole_appuser_id) REFERENCES appuser (appuser_id)
+		MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT FK_USERROLE_ROLE FOREIGN KEY (userrole_role_id) REFERENCES role (role_id)
+		MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+ALTER TABLE userrole OWNER TO postgres;

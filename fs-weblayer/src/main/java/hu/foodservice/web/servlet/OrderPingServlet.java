@@ -1,4 +1,4 @@
-package hu.foodservice.web;
+package hu.foodservice.web.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;

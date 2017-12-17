@@ -64,7 +64,7 @@ public class OrderServiceImplIntegrationTest {
 		CustomerOrder custOrder = object.readCustOrder("T0");
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			assertCustomerOrder(custOrder, "T0", menuService.readMenu("A menu"), new Date(format.parse("2017-12-02").getTime()), customerService.readCustomer("Adam Kidd"));
+			assertCustomerOrder(custOrder, "T0", menuService.readMenu("A menu"), new Date(format.parse("2017-12-17").getTime()), customerService.readCustomer("Adam Kidd"));
 		} catch (ParseException e) {
 			Logger.getLogger(getClass()).error("Failed to parse the string to the date");
 		}	
@@ -75,7 +75,7 @@ public class OrderServiceImplIntegrationTest {
 		CustomerOrder custOrder = object.readCustOrder("T0");
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			assertCustomerOrder(custOrder, "T0", menuService.readMenu("A menu"), new Date(format.parse("2017-12-02").getTime()), customerService.readCustomer("Adam Kidd"));
+			assertCustomerOrder(custOrder, "T0", menuService.readMenu("A menu"), new Date(format.parse("2017-12-17").getTime()), customerService.readCustomer("Adam Kidd"));
 		} catch (ParseException e) {
 			Logger.getLogger(getClass()).error("Failed to parse the string to the date");
 		}	
@@ -87,8 +87,8 @@ public class OrderServiceImplIntegrationTest {
 		
 		try {
 			this.object.getEm().getTransaction().begin();
-			this.object.updateOrder("T0", new Date(format.parse("2017-11-30").getTime()), true);
-			assertCustomerOrder(this.object.readCustOrder("T0"), "T0", menuService.readMenu("A menu"), new Date(format.parse("2017-11-30").getTime()), this.customerService.readCustomer("Adam Kidd"));
+			this.object.updateOrder("T0", new Date(format.parse("2017-12-18").getTime()), false);
+			assertCustomerOrder(this.object.readCustOrder("T0"), "T0", menuService.readMenu("A menu"), new Date(format.parse("2017-12-18").getTime()), this.customerService.readCustomer("Adam Kidd"));
 			this.object.getEm().getTransaction().rollback();
 		} catch (ParseException e) {
 			Logger.getLogger(getClass()).error("Failed to parse the string to the date");
@@ -101,7 +101,7 @@ public class OrderServiceImplIntegrationTest {
 		String testOrderCode = "AAA666";
 		Date testDate = new Date(1);
 		try {
-			testDate.setTime(format.parse("2017-11-30").getTime());
+			testDate.setTime(format.parse("2017-12-17").getTime());
 		} catch (ParseException e) {
 			Logger.getLogger(getClass()).error("Failed to parse the string to the date");
 		}

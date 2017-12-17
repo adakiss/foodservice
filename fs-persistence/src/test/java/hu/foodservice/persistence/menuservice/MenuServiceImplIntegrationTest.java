@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -58,8 +59,8 @@ public class MenuServiceImplIntegrationTest {
 		
 		Menu menu = object.readMenu("A menu");
 		Meal[] arr = new Meal[] {
-			mealService.readMeal("pasta with cottage cheese"),
-			mealService.readMeal("gulash")
+			mealService.readMeal("gulash"),
+			mealService.readMeal("pasta with cottage cheese")
 		};
 		assertMenu(menu, "A menu", arr, true, 1000);
 	}
@@ -86,7 +87,9 @@ public class MenuServiceImplIntegrationTest {
 		Menu menu = this.object.readMenu(testMenuName);
 		
 		Meal[] meals2 = new Meal[4];
-		assertMenu(menu, testMenuName, meals.toArray(meals2), true, 1000);
+		meals.toArray(meals2);
+		Arrays.sort(meals2);
+		assertMenu(menu, testMenuName, meals2, true, 1000);
 		
 		this.object.getEm().getTransaction().begin();
 		this.object.deleteMenu(testMenuName);
@@ -115,7 +118,9 @@ public class MenuServiceImplIntegrationTest {
 		Menu menu = this.object.readMenu(testMenuName);
 		
 		Meal[] meals2 = new Meal[4];
-		assertMenu(menu, testMenuName, meals.toArray(meals2), false, 2750);
+		meals.toArray(meals2);
+		Arrays.sort(meals2);
+		assertMenu(menu, testMenuName, meals2, false, 2750);
 		
 		this.object.getEm().getTransaction().begin();
 		this.object.deleteMenu(testMenuName);
@@ -127,6 +132,9 @@ public class MenuServiceImplIntegrationTest {
 		Assert.assertEquals(menu.getName(), name);
 		Assert.assertEquals(menu.getIsGeneric(), isGeneric);
 		Assert.assertEquals(menu.getPrice(), price);
-		Assert.assertEquals(menu.getOrderedMeals().toArray(), includedMeals);
+		
+		Object[] actMeals = menu.getOrderedMeals().toArray();
+		Arrays.sort(actMeals);
+		Assert.assertEquals(actMeals, includedMeals);
 	}
 }

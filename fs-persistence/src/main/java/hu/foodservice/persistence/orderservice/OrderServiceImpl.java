@@ -83,7 +83,9 @@ public class OrderServiceImpl implements OrderService {
 		try {
 			CustomerOrder custOrder = readCustOrder(orderCode);
 			custOrder.setDeadLine(deadLine);
-			custOrder.setStatus(OrderStatus.values()[(custOrder.getStatus().ordinal())+1]);
+			if (nextPhase) {
+				custOrder.setStatus(OrderStatus.values()[(custOrder.getStatus().ordinal())+1]);
+			}
 			
 			this.em.persist(custOrder);
 			this.em.flush();
