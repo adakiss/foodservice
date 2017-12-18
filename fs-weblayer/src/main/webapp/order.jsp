@@ -15,6 +15,11 @@
 <title>:: Order information ::</title>
 </head>
 <body>
+	<div class="header">
+		<a href="EmployeeMainPanel.html">
+			<img src="/fs-weblayer/img/coollogo_com-153401633.png" class="header"/>
+		</a>
+	</div>
 	<h1>Order code: <% out.print(custOrder.getOrderCode()); %></h1>
 	<div>Buyer: <a class="entry" href="http://localhost:8080/fs-weblayer/Customer?name=<% out.print(custOrder.getBuyer().getCustName()); %>"><% out.print(custOrder.getBuyer().getCustName()); %></a></div>
 	<div>Ordered menu: <a class="entry" href="http://localhost:8080/fs-weblayer/Menu?name=<% out.print(custOrder.getOrderedMenu().getMenuName()); %>"><% out.print(custOrder.getOrderedMenu().getMenuName()); %></a></div>

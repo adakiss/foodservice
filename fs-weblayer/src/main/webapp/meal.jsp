@@ -10,6 +10,11 @@
 <title>:: Meal information ::</title>
 </head>
 <body>
+	<div class="header">
+		<a href="EmployeeMainPanel.html">
+			<img src="/fs-weblayer/img/coollogo_com-153401633.png" class="header"/>
+		</a>
+	</div>
 	<h1><% out.print(meal.getMealName()); %></h1>
 	<div>Description: <% out.print(meal.getMealDescription()); %></div>
 	<div>Price: <% out.print(meal.getPrice()); %></div>

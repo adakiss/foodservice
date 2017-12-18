@@ -17,6 +17,11 @@
 <title>:: List of available menus ::</title>
 </head>
 <body>
+	<div class="header">
+		<a href="EmployeeMainPanel.html">
+			<img src="/fs-weblayer/img/coollogo_com-153401633.png" class="header"/>
+		</a>
+	</div>
 	<h1><% out.print("Menus"); %></h1>
 	<div>
 		<% 

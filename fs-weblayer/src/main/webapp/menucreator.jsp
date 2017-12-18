@@ -12,6 +12,11 @@
 <title>:: Meal information ::</title>
 </head>
 <body>
+	<div class="header">
+		<a href="EmployeeMainPanel.html">
+			<img src="/fs-weblayer/img/coollogo_com-153401633.png" class="header"/>
+		</a>
+	</div>
 	<h1>Create a menu</h1>
 	<div>
 		<form action="MenuCreator" method="POST">

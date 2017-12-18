@@ -10,6 +10,11 @@
 <title>:: Customer information ::</title>
 </head>
 <body>
+	<div>
+		<a href="EmployeeMainPanel.html">
+			<img src="/fs-weblayer/img/coollogo_com-153401633.png" class="header"/>
+		</a>
+	</div>
 	<h1><% out.print(cust.getCustName()); %></h1>
 	<div>Address: <a><% out.print(cust.getCustAddress()); %></a></div>
 	<div>Phone: <% out.print(cust.getCustTelNumber()); %></div>
